@@ -1,5 +1,7 @@
 <?php
 
+namespace Freshsales;
+
 /**
  */
 class CurlTransport
@@ -26,7 +28,7 @@ class CurlTransport
     /**
      * @param $action
      * @param $message
-     * @throws Exception
+     * @throws \Exception
      */
     public function post($action, $message)
     {
@@ -36,10 +38,14 @@ class CurlTransport
         $body = json_encode($message);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            array(
                 'Content-Type: application/json',
                 'Accept: application/json',
-                'Content-Length: ' . strlen($body))
+                'Content-Length: ' . strlen($body)
+            )
         );
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
@@ -48,7 +54,7 @@ class CurlTransport
         $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
         if ($http_status != 200) {
-            throw new Exception("Freshsales encountered an error. CODE: " . $http_status . " Response: " . $response);
+            throw new \Exception("Freshsales encountered an error. CODE: " . $http_status . " Response: " . $response);
         }
     }
 

@@ -1,9 +1,6 @@
 <?php
 
-/**
- */
-
-require(__DIR__ . '/CurlTransport.php');
+namespace Freshsales;
 
 /**
  * Class Client
@@ -28,7 +25,7 @@ class Client
     /**
      * Identify user
      * @param array $properties
-     * @throws Exception
+     * @throws \Exception
      */
     public function identify(array $properties)
     {
@@ -36,7 +33,7 @@ class Client
         $message['identifier'] = $properties['identifier'];
         // unset identifier from properties
         unset($properties['identifier']);
-        $message['visitor'] = $this->convert_array_to_object($properties);
+        $message['visitor'] = $this->convertArrayToObject($properties);
         // post message
         $this->curlTrans->post('visitors', $message);
     }
@@ -44,7 +41,7 @@ class Client
     /**
      * Track Event
      * @param array $properties
-     * @throws Exception
+     * @throws \Exception
      */
     public function trackEvent(array $properties)
     {
@@ -52,7 +49,7 @@ class Client
         $message['identifier'] = $properties['identifier'];
         // unset identifier from properties
         unset($properties['identifier']);
-        $message['event'] = $this->convert_array_to_object($properties);
+        $message['event'] = $this->convertArrayToObject($properties);
         // post message
         $this->curlTrans->post('events', $message);
     }
@@ -60,12 +57,12 @@ class Client
     /**
      * Track Page View
      * @param array $properties
-     * @throws Exception
+     * @throws \Exception
      */
     public function trackPageView(array $properties)
     {
         $message = array();
-        $pageView = new stdClass();
+        $pageView = new \stdClass();
         $pageView->url = $properties['url'];
         $message['identifier'] = $properties['identifier'];
         // unset identifier from properties
@@ -78,11 +75,11 @@ class Client
     /**
      * Utility method to convert array members to an object
      * @param array $prop
-     * @return stdClass
+     * @return \stdClass
      */
-    private function convert_array_to_object(array $prop)
+    private function convertArrayToObject(array $prop)
     {
-        $object = new stdClass();
+        $object = new \stdClass();
         foreach ($prop as $key => $value) {
             $object->$key = $value;
         }

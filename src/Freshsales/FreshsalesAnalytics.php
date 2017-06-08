@@ -1,12 +1,9 @@
 <?php
 
-/**
- */
-
-require(dirname(__FILE__) . '/freshsales/Client.php');
+namespace Freshsales;
 
 /**
- * Class Freshsales
+ * Class FreshsalesAnalytics.
  */
 class FreshsalesAnalytics
 {
@@ -18,6 +15,7 @@ class FreshsalesAnalytics
     /**
      * Initializes the default client to use.
      *
+     * @param $properties
      */
     public static function init($properties)
     {
@@ -28,7 +26,7 @@ class FreshsalesAnalytics
 
     /**
      * @param array $properties
-     * @throws Exception
+     * @throws \Exception
      */
     public static function identify(array $properties)
     {
@@ -41,7 +39,7 @@ class FreshsalesAnalytics
     /**
      * @param array $properties
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public static function trackEvent(array $properties)
     {
@@ -55,7 +53,7 @@ class FreshsalesAnalytics
     /**
      * @param array $properties
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public static function trackPageView(array $properties)
     {
@@ -69,27 +67,27 @@ class FreshsalesAnalytics
     /**
      * Check the client.
      *
-     * @throws Exception
+     * @throws \Exception
      */
     private static function checkClient()
     {
         if (null != self::$client) {
             return;
         }
-        throw new Exception("Freshsales::init() must be called before any other tracking method.");
+        throw new \Exception("Freshsales::init() must be called before any other tracking method.");
     }
 
     /**
      * Assert `value` or throw.
      *
-     * @param array $value
+     * @param bool $value
      * @param string $msg
-     * @throws Exception
+     * @throws \Exception
      */
     private static function assert($value, $msg)
     {
         if (!$value) {
-            throw new Exception($msg);
+            throw new \Exception($msg);
         }
     }
 }
